@@ -2,6 +2,13 @@
 > Cypher is Neo4j’s implementation of GQL. Cypher is a declarative language, meaning the database is responsible for
 > finding the most optimal way of executing that query.
 
+
+What gives Neo4j its advantage?
+- Neo4j is a native graph database designed specifically for graph traversal.
+- Where Joins between tables are computed at read-time, this information is saved in a way that allows for quick pointer-chasing in memory
+- Queries in Graph Databases are proportional to the amount of data touched during a query, not the size of data overall.
+
+
 - `MATCH` to read data
 - `MERGE` to write data
 
@@ -52,5 +59,49 @@ RETURN u.name, r.rating, m.title`
 
 ![tabular-3.png](img/tabular-3.png)
 
+`MATCH (p:Person)-[r:ACTED_IN]->(m:Movie)
+WHERE p.name = 'Tom Hanks'
+RETURN p.name AS person, m.title AS title, r.role AS role
+`
 
+> The MATCH clause is used to find patterns in the data.
+> Patterns can be as simple as a single node, or contain multiple relationships.
 
+`MATCH (p:Person)-[:ACTED_IN]->(m:Movie)<-[r:ACTED_IN]-(p2:Person)
+WHERE p.name = 'Tom Hanks'
+RETURN p.name as main_actor, p2.name AS actor, m.title AS movie, r.role AS role`
+
+> The MERGE Clause
+> To create nodes and relationships in the database, you use the MERGE clause.
+> You can use the MERGE clause to create a pattern in the database. MERGE will only create the pattern if it doesn’t already exist.
+
+Run this Cypher statement, that uses MERGE to create a new Movie node:
+
+`MERGE (m:Movie {title: "Arthur the King"})
+SET m.year = 2024
+RETURN m`
+
+Run this Cypher statement, that creates Movie and User nodes and a RATED relationship between them.
+
+`MERGE (m:Movie {title: "Arthur the King"})
+MERGE (u:User {name: "Adam"})
+MERGE (u)-[r:RATED {rating: 5}]->(m)
+RETURN u, r, m`
+
+Run this query to return movies order by the most recent release date:
+
+`MATCH (m:Movie)
+WHERE m.released IS NOT NULL
+RETURN m.title AS title, m.url AS url, m.released AS released
+ORDER BY released DESC LIMIT 5`
+
+Modify this query to add your favourite movie and a user rating
+
+`MERGE (m:Movie {title: "Java"})
+MERGE (u:User {name: "Tuna"})
+MERGE (u)-[r:RATED {rating: 1}]->(m)
+RETURN u, r, m`
+
+`MATCH (u:User)-[r:RATED]->(m:Movie)
+WHERE m.title = 'Java'
+RETURN m.title, u.name, r.rating`
