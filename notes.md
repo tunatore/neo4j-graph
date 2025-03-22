@@ -135,7 +135,8 @@ RETURN m.title, u.name, r.rating
 
 // example Cypher pattern  
 ```
-(m:Movie {title: 'Cloud Atlas'})<-[:ACTED_IN]-(p:Person)```
+(m:Movie {title: 'Cloud Atlas'})<-[:ACTED_IN]-(p:Person)
+```
 
 Two ways to filter MATCH queries:  
 
@@ -304,7 +305,8 @@ RETURN p, m
 ```
 MERGE (p:Person {name: 'Chadwick Boseman'})
 MERGE (m:Movie {title: 'Black Panther'})
-MERGE (p)-[:ACTED_IN]-(m)`
+MERGE (p)-[:ACTED_IN]-(m)
+```
 
 > [!IMPORTANT]   
 > Note that in this MERGE clause where we create the relationships, we did not specify the direction of the relationship. By default, if you do not specify the direction when you create the relationship, it will always be assumed left-to-right.
