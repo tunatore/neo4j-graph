@@ -30,7 +30,8 @@ RETURN m, r, p
 ```
 MATCH (m:Movie)-[r:IN_GENRE]->(g:Genre)
 WHERE m.title = 'Toy Story'
-RETURN m, r, g`
+RETURN m, r, g
+```
 
 You can return tabular data by including the properties of the nodes.
 
