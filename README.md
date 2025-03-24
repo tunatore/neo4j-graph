@@ -1,3 +1,6 @@
 # neo4j-graph
 
-[notes.md](notes.md)
+| [Neo4j Cypher Fundamentals](neo4j-cypher-fundamentals.md) |
+|-----------------------------------------------------------|
+| [Graph Data Modelling](graph-data-modelling.md)           |
+
